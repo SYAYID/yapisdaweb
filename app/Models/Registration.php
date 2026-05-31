@@ -13,7 +13,7 @@ class Registration extends Model
 
     public function getAvailableQuotaAttribute()
     {
-        return $this->quota - $this->used_quota;
+        return max(0, $this->quota - $this->used_quota);
     }
      public function getPercentageAttribute()
     {
@@ -32,4 +32,9 @@ class Registration extends Model
         }
         return 'available';
     }
+    // Di app/Models/Registration.php
+public function applicants()
+{
+    return $this->hasMany(Applicant::class, 'major_choice', 'major');
+}
 }

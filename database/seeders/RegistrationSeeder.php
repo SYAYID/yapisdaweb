@@ -19,7 +19,10 @@ class RegistrationSeeder extends Seeder
         ];
 
         foreach ($majors as $major) {
-            Registration::create($major);
+            Registration::updateOrCreate(
+                ['major' => $major['major']],
+                ['quota' => $major['quota']]
+            );
         }
     }
 }

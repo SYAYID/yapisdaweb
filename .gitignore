@@ -22,3 +22,6 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+create_admins.php
+create_specific_admins.php
+implementation_plan.md

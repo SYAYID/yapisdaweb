@@ -10,7 +10,8 @@ class Applicant extends Model
     use HasFactory;
 
     protected $fillable = [
-        'registration_number', 'kk_area', 'kk_number', 'nik', 'nisn', 'full_name',
+        'user_id', 'registration_number', 'kk_area', 'kk_number', 'nik', 'nisn',
+        'student_identification_number', 'student_identification_assigned_at', 'full_name',
         'gender', 'birth_place', 'birth_date', 'religion', 'phone', 'email',
         'previous_school', 'major_choice', 'citizenship', 'birth_certificate_number',
         'height', 'weight', 'head_circumference', 'siblings_count', 'child_order',
@@ -39,10 +40,55 @@ class Applicant extends Model
         'guardian_birth_date' => 'date:d/m/Y',
         'same_as_ktp' => 'boolean',
         'has_guardian' => 'boolean',
+        'verified_at' => 'datetime',
+        'student_identification_assigned_at' => 'datetime',
     ];
 
     public function getRegistrationNumberAttribute($value)
     {
         return strtoupper($value);
+    }
+
+    public function freshTimestamp()
+    {
+        return now('Asia/Jakarta');
+    }
+
+    public function getRegisteredAtWibAttribute()
+    {
+        return $this->created_at?->copy()->timezone('Asia/Jakarta');
+    }
+
+    public function getRegisteredAtLabelAttribute(): string
+    {
+        return $this->registered_at_wib
+            ? $this->registered_at_wib->format('d/m/Y H:i') . ' WIB'
+            : '-';
+    }
+
+    public function getRegisteredDateLabelAttribute(): string
+    {
+        return $this->registered_at_wib
+            ? $this->registered_at_wib->format('d/m/Y')
+            : '-';
+    }
+
+    public function getRegisteredTimeLabelAttribute(): string
+    {
+        return $this->registered_at_wib
+            ? $this->registered_at_wib->format('H:i') . ' WIB'
+            : '-';
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(ApplicantActivity::class, 'applicant_id')
+            ->where('applicant_type', 'smk')
+            ->latest();
     }
 }

@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'yapisda_api' => [
+        'token' => env('YAPISDA_API_TOKEN'),
+    ],
+
 ];

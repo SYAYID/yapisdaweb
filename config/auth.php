@@ -40,6 +40,22 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'admin_smk' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+        'admin_smp' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+        'finance' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+        'operations' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
     ],
 
     /*
